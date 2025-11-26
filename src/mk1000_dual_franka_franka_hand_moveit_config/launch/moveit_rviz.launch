@@ -1,0 +1,20 @@
+<launch>
+  <arg name="debug" default="false"/>
+  <arg name="no_gui_ctrl" default="false"/>
+  <!-- 非 debug: 延时 2 秒再 exec 后面的 RViz 命令 -->
+  <arg unless="$(arg debug)" name="launch_prefix"
+       value="bash -c 'sleep 1; exec &quot;$0&quot; &quot;$@&quot;'"/>
+
+  <!-- debug: 用 gdb 跑 RViz -->
+  <arg if="$(arg debug)" name="launch_prefix"
+       value="gdb --ex run --args"/>
+
+  <arg name="rviz_config" default=""/>
+  <arg if="$(eval rviz_config=='')"  name="command_args" value=""/>
+  <arg unless="$(eval rviz_config=='')" name="command_args" value="-d $(arg rviz_config)"/>
+
+  <node name="$(anon rviz)"
+        launch-prefix="$(arg launch_prefix)"
+        pkg="rviz" type="rviz" respawn="false"
+        args="$(arg command_args)" output="screen"/>
+</launch>

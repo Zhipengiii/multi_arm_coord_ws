@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This does not replace URDF, and is not an extension
+of URDF.
+    This is a format for representing semantic information about the robot structure.
+    A URDF file must exist for this robot as well, where the joints and the links that are referenced
+are defined
+-->
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="dual_fr3">
+
+
+    <xacro:include filename="$(find mk1000_dual_franka_franka_hand_moveit_config)/config/arm.xacro" />
+    <!-- panda_arm group: eef frame aligned to robot's flanche -->
+    <!-- 单臂规划组-->
+    <xacro:arm name="left_arm" arm_id="left_fr3" tip_link="left_fr3_link8" />
+    <xacro:arm name="right_arm" arm_id="right_fr3" tip_link="right_fr3_link8" />
+    <!-- 双臂规划组-->
+        <group name="dual_arm">
+              <group name="left_arm"/>
+              <group name="right_arm"/>
+        </group>
+        
+<xacro:arm_group_state  name="dual_arm" />
+    <!--Add
+    the hand if people request it-->
+    <xacro:arg name="hand" default="true" />
+    <xacro:if value="$(arg hand)">
+        <!-- manipulator group: eef frame aligned to hand  带手规划组-->
+        <xacro:arm name="left_manipulator" arm_id="left_fr3" tip_link="left_fr3_hand_tcp" />
+        <xacro:arm name="right_manipulator" arm_id="right_fr3" tip_link="right_fr3_hand_tcp" />
+        <xacro:include filename="$(find mk1000_dual_franka_franka_hand_moveit_config)/config/hand.xacro" /> <!-- 包含手-->
+        <xacro:hand name="left" arm_id="left_fr3" />
+        <xacro:hand name="right" arm_id="right_fr3" />
+
+        <!--END
+        EFFECTOR: Purpose: Represent information about an end effector.-->
+        <end_effector name="left_fr3_hand_tcp" parent_link="left_fr3_hand_tcp" group="left_hand" parent_group="left_manipulator" />
+        <end_effector name="right_fr3_hand_tcp" parent_link="right_fr3_hand_tcp" group="right_hand" parent_group="right_manipulator" />
+        <!-- old end-effector -->
+        <end_effector name="left_fr3_hand" parent_link="left_fr3_link8" group="left_hand" parent_group="left_arm" />
+        <end_effector name="right_fr3_hand" parent_link="right_fr3_link8" group="right_hand" parent_group="right_arm" />
+
+    <!-- 双臂规划组-->
+        <group name="dual_manipulator">
+              <group name="left_manipulator"/>
+              <group name="right_manipulator"/>
+        </group>
+
+        <group name="dual_hand">
+              <group name="left_hand"/>
+              <group name="right_hand"/>
+        </group>
+        <xacro:arm_group_state  name="dual_manipulator" />
+
+    </xacro:if>
+
+</robot>

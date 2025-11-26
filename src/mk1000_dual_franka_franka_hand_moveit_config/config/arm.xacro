@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="dual_fr3">
+    <xacro:macro name="arm" params="name arm_id tip_link">
+    <xacro:property name="is_left" value="${arm_id == 'left_fr3'}"/>
+    <xacro:property name="is_left_mirror" value="${0 if is_left else -pi}"/>
+    <xacro:property name="is_right_mirror" value="${-pi if is_left else 0}"/>
+     <xacro:property name="is_right_mirror2" value="${-pi/4 if is_left else 0}"/>
+        <!--GROUPS: Representation of a set of joints and links. This can be useful for specifying DOF to plan for, defining arms, end effectors, etc-->
+        <!--LINKS: When a link is specified, the parent joint of that link (if it exists) is automatically included-->
+        <!--JOINTS: When a joint is specified, the child link of that joint (which will always exist) is automatically included-->
+        <!--CHAINS: When a chain is specified, all the links along the chain (including endpoints) are included in the group. Additionally, all the joints that are parents to included links are also included. This means that joints along the chain and the parent joint of the base link are included in the group-->
+        <!--SUBGROUPS: Groups can also be formed by referencing to already defined group names-->
+        <group name="${name}">
+            <chain base_link="${arm_id}_link0" tip_link="${tip_link}" />
+        </group>
+        <!--GROUP STATES: Purpose: Define a named state for a particular group, in terms of joint values. This is useful to define states like 'folded arms'-->
+        <group_state name="ready" group="${name}">
+            <joint name="${arm_id}_joint1" value="0" />
+            <joint name="${arm_id}_joint2" value="${-pi/4}" />
+            <joint name="${arm_id}_joint3" value="0" />
+            <joint name="${arm_id}_joint4" value="${-3*pi/4}" />
+            <joint name="${arm_id}_joint5" value="0" />
+            <joint name="${arm_id}_joint6" value="${pi/2}" />
+            <joint name="${arm_id}_joint7" value="${pi/4}" />
+        </group_state>
+      
+
+
+        <xacro:if value="${is_left}">
+            <group_state name="reset_pose" group="${name}">
+                <joint name="left_fr3_joint1" value="1.2221444684776281" />
+                <joint name="left_fr3_joint2" value="-1.6585625524328789" />
+                <joint name="left_fr3_joint3" value="-1.6637393847033333" />
+                <joint name="left_fr3_joint4" value="-2.3689336467272306" />
+                <joint name="left_fr3_joint5" value="0.01372615589520761" />
+                <joint name="left_fr3_joint6" value="1.575517752000928" />
+                <joint name="left_fr3_joint7" value="0.8093230855121317" />
+            </group_state>
+            <group_state name="move_test" group="${name}">
+                <joint name="left_fr3_joint1" value="-0.19131490306957072" />
+                <joint name="left_fr3_joint2" value="0.7964133294824977" />
+                <joint name="left_fr3_joint3" value="1.2955022867948325" />
+                <joint name="left_fr3_joint4" value="-1.5253014693901736" />
+                <joint name="left_fr3_joint5" value="0.7104796325290909" />
+                <joint name="left_fr3_joint6" value="1.1587764415435564" />
+                <joint name="left_fr3_joint7" value="0.6140968482080426" />
+            </group_state>
+
+        </xacro:if>
+
+        <xacro:if value="${not is_left}">
+            <group_state name="reset_pose" group="${name}">
+                <joint name="right_fr3_joint1" value="1.8219070053713866" />
+                <joint name="right_fr3_joint2" value="1.6892267674933292" />
+                <joint name="right_fr3_joint3" value="-1.3387181899873213" />
+                <joint name="right_fr3_joint4" value="-2.707630216220305" />
+                <joint name="right_fr3_joint5" value="0.30009983421509745" />
+                <joint name="right_fr3_joint6" value="2.424218696766245" />
+                <joint name="right_fr3_joint7" value="0.7947810914163859" />
+            </group_state>
+          </xacro:if>
+        <group_state name="extended" group="${name}">
+            <joint name="${arm_id}_joint1" value="0" />
+            <joint name="${arm_id}_joint2" value="0" />
+            <joint name="${arm_id}_joint3" value="0" />
+            <joint name="${arm_id}_joint4" value="-0.5" />
+            <joint name="${arm_id}_joint5" value="0" />
+            <joint name="${arm_id}_joint6" value="${pi}" />
+            <joint name="${arm_id}_joint7" value="${pi/4}" />
+        </group_state>
+
+        <group_state name="detect_pose" group="${name}">
+            <joint name="${arm_id}_joint1" value="${is_left_mirror+1.5191491168578553}" />
+            <joint name="${arm_id}_joint2" value="-0.5226409999177323" />
+            <joint name="${arm_id}_joint3" value="-0.09615698706299072" />
+            <joint name="${arm_id}_joint4" value="-2.693587309351917" />
+            <joint name="${arm_id}_joint5" value="0.042663716294725824" />
+            <joint name="${arm_id}_joint6" value="2.7356317327319983" />
+            <joint name="${arm_id}_joint7" value="${is_left_mirror+2.227977272240044}" />
+        </group_state>
+
+        <group_state name="place_pose" group="${name}">
+            <joint name="${arm_id}_joint1" value="${is_left_mirror+1.4872577392407613}" />
+            <joint name="${arm_id}_joint2" value="0.46931011624163443" />
+            <joint name="${arm_id}_joint3" value="-0.04009679591312283" />
+            <joint name="${arm_id}_joint4" value="-2.039629627983034" />
+            <joint name="${arm_id}_joint5" value="0.039292902158847606" />
+            <joint name="${arm_id}_joint6" value="3.930249322496326" />
+            <joint name="${arm_id}_joint7" value="${is_left_mirror+2.520191151694202}" />
+        </group_state>
+        
+    </xacro:macro>
+
+<xacro:macro name="arm_group_state" params="name  ">
+        <group_state name="ready" group="${name}">
+            <joint name="left_fr3_joint1" value="0" />
+            <joint name="left_fr3_joint2" value="${-pi/4}" />
+            <joint name="left_fr3_joint3" value="0" />
+            <joint name="left_fr3_joint4" value="${-3*pi/4}" />
+            <joint name="left_fr3_joint5" value="0" />
+            <joint name="left_fr3_joint6" value="${pi/2}" />
+            <joint name="left_fr3_joint7" value="${pi/4}" />
+            <joint name="right_fr3_joint1" value="0" />
+            <joint name="right_fr3_joint2" value="${-pi/4}" />
+            <joint name="right_fr3_joint3" value="0" />
+            <joint name="right_fr3_joint4" value="${-3*pi/4}" />
+            <joint name="right_fr3_joint5" value="0" />
+            <joint name="right_fr3_joint6" value="${pi/2}" />
+            <joint name="right_fr3_joint7" value="${pi/4}" />
+        </group_state>
+        <group_state name="extended" group="${name}">
+            <joint name="left_fr3_joint1" value="0" />
+            <joint name="left_fr3_joint2" value="0" />
+            <joint name="left_fr3_joint3" value="0" />
+            <joint name="left_fr3_joint4" value="-0.5" />
+            <joint name="left_fr3_joint5" value="0" />
+            <joint name="left_fr3_joint6" value="${pi}" />
+            <joint name="left_fr3_joint7" value="${pi/4}" />
+            <joint name="right_fr3_joint1" value="0" />
+            <joint name="right_fr3_joint2" value="0" />
+            <joint name="right_fr3_joint3" value="0" />
+            <joint name="right_fr3_joint4" value="-0.5" />
+            <joint name="right_fr3_joint5" value="0" />
+            <joint name="right_fr3_joint6" value="${pi}" />
+            <joint name="right_fr3_joint7" value="${pi/4}" />
+        </group_state>
+        
+        <group_state name="reset_pose" group="${name}">
+            <joint name="left_fr3_joint1" value="1.2221444684776281" />
+            <joint name="left_fr3_joint2" value="-1.6585625524328789" />
+            <joint name="left_fr3_joint3" value="-1.6637393847033333" />
+            <joint name="left_fr3_joint4" value="-2.3689336467272306" />
+            <joint name="left_fr3_joint5" value="0.01372615589520761" />
+            <joint name="left_fr3_joint6" value="1.575517752000928" />
+            <joint name="left_fr3_joint7" value="0.8093230855121317" />
+            <joint name="right_fr3_joint1" value="1.8219070053713866" />
+            <joint name="right_fr3_joint2" value="1.6892267674933292" />
+            <joint name="right_fr3_joint3" value="-1.3387181899873213" />
+            <joint name="right_fr3_joint4" value="-2.707630216220305" />
+            <joint name="right_fr3_joint5" value="0.30009983421509745" />
+            <joint name="right_fr3_joint6" value="2.424218696766245" />
+            <joint name="right_fr3_joint7" value="0.7947810914163859" />
+        </group_state>
+
+        <group_state name="detect_pose" group="${name}">
+            <joint name="left_fr3_joint1" value="1.5191491168578553" />
+            <joint name="left_fr3_joint2" value="-0.5226409999177323" />
+            <joint name="left_fr3_joint3" value="-0.09615698706299072" />
+            <joint name="left_fr3_joint4" value="-2.693587309351917" />
+            <joint name="left_fr3_joint5" value="0.042663716294725824" />
+            <joint name="left_fr3_joint6" value="2.7356317327319983" />
+            <joint name="left_fr3_joint7" value="2.227977272240044" />
+            <joint name="right_fr3_joint1" value="${-pi+1.5191491168578553}" />
+            <joint name="right_fr3_joint2" value="-0.5226409999177323" />
+            <joint name="right_fr3_joint3" value="-0.09615698706299072" />
+            <joint name="right_fr3_joint4" value="-2.693587309351917" />
+            <joint name="right_fr3_joint5" value="0.042663716294725824" />
+            <joint name="right_fr3_joint6" value="2.7356317327319983" />
+            <joint name="right_fr3_joint7" value="${-pi+2.227977272240044}" />
+        </group_state>
+
+        <group_state name="place_pose" group="${name}">
+            <joint name="left_fr3_joint1" value="1.4872577392407613" />
+            <joint name="left_fr3_joint2" value="0.46931011624163443" />
+            <joint name="left_fr3_joint3" value="-0.04009679591312283" />
+            <joint name="left_fr3_joint4" value="-2.039629627983034" />
+            <joint name="left_fr3_joint5" value="0.039292902158847606" />
+            <joint name="left_fr3_joint6" value="3.930249322496326" />
+            <joint name="left_fr3_joint7" value="2.520191151694202" />
+            <joint name="right_fr3_joint1" value="${-pi+1.4872577392407613}" />
+            <joint name="right_fr3_joint2" value="0.46931011624163443" />
+            <joint name="right_fr3_joint3" value="-0.04009679591312283" />
+            <joint name="right_fr3_joint4" value="-2.039629627983034" />
+            <joint name="right_fr3_joint5" value="0.039292902158847606" />
+            <joint name="right_fr3_joint6" value="3.930249322496326" />
+            <joint name="right_fr3_joint7" value="${-pi+2.520191151694202}" />
+        </group_state>
+
+</xacro:macro>
+
+    <!--VIRTUAL JOINT: Purpose: this element defines a virtual joint between a robot link and an external frame of reference (considered fixed with respect to the robot)-->
+    <!-- <virtual_joint name="virtual_joint" type="fixed" parent_frame="world" child_link="$(arg arm_id)_link0" /> -->
+
+
+
+
+
+    <xacro:macro name="disable_collisions_for" params="link:=^ others:=^">
+        <xacro:if value="${others}">
+            <xacro:property name="other" value="${others.pop(0)}" />
+            <disable_collisions link1="${link}" link2="${other}" reason="Never" />
+            <!-- recursively call -->
+            <xacro:disable_collisions_for />
+        </xacro:if>
+    </xacro:macro>
+
+
+
+
+
+
+    <xacro:macro name="enable_collisions_for" params="link:=^ others:=^">
+        <xacro:if value="${others}">
+            <xacro:property name="other" value="${others.pop(0)}" />
+            <enable_collisions link1="${link}" link2="${other}" />
+            <!-- recursively call -->
+            <xacro:enable_collisions_for />
+        </xacro:if>
+    </xacro:macro>
+
+    <xacro:macro name="configure_collisions" params="link arm_id enabled:=${[]}">
+        <!-- Disable collision checking between normal links, as these are handled by "sc" links -->
+        <xacro:property name="link_fmt" value="${arm_id}_link{}" />
+        <xacro:disable_collisions_for link="${link_fmt.format(link)}" others="${[link_fmt.format(i) for i in python.range(8)]}" />
+
+        <!-- Disable all collision checking for ${link}_sc -->
+        <xacro:property name="link_fmt" value="${arm_id}_link{}_sc" />
+        <disable_default_collisions link="${link_fmt.format(link)}" />
+        <!-- Re-enable collisions checking for selected links -->
+        <xacro:enable_collisions_for link="${link_fmt.format(link)}" others="${[link_fmt.format(i) for i in enabled]}" />
+    </xacro:macro>
+
+    <!-- Configure ACM -->
+    <xacro:configure_collisions link="0" arm_id="left_fr3" enabled="${[5,6,7]}" />
+    <xacro:configure_collisions link="1" arm_id="left_fr3" enabled="${[5,6,7]}" />
+    <xacro:configure_collisions link="2" arm_id="left_fr3" enabled="${[5,6,7]}" />
+    <xacro:configure_collisions link="3" arm_id="left_fr3" enabled="${[7]}" />
+    <xacro:configure_collisions link="4" arm_id="left_fr3" />
+    <xacro:configure_collisions link="5" arm_id="left_fr3" />
+    <xacro:configure_collisions link="6" arm_id="left_fr3" />
+    <xacro:configure_collisions link="7" arm_id="left_fr3" />
+
+    <xacro:configure_collisions link="0" arm_id="right_fr3" enabled="${[5,6,7]}" />
+    <xacro:configure_collisions link="1" arm_id="right_fr3" enabled="${[5,6,7]}" />
+    <xacro:configure_collisions link="2" arm_id="right_fr3" enabled="${[5,6,7]}" />
+    <xacro:configure_collisions link="3" arm_id="right_fr3" enabled="${[7]}" />
+    <xacro:configure_collisions link="4" arm_id="right_fr3" />
+    <xacro:configure_collisions link="5" arm_id="right_fr3" />
+    <xacro:configure_collisions link="6" arm_id="right_fr3" />
+    <xacro:configure_collisions link="7" arm_id="right_fr3" />
+</robot>

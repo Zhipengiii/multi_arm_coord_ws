@@ -1,0 +1,87 @@
+
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="robot">
+    <xacro:include filename="$(find mr1000_dual_fr3_description)/urdf/mr1000_macro.xacro" />
+    <xacro:include filename="$(find mr1000_dual_fr3_description)/urdf/laser.xacro" />
+    <xacro:include filename="$(find mr1000_dual_fr3_description)/urdf/mid360.xacro" />
+    <xacro:include filename="$(find realsense2_description)/urdf/_d435i.urdf.xacro"/>
+    <xacro:include filename="$(find mr1000_dual_fr3_description)/urdf/camera_bracket.xacro" />
+
+    <xacro:mr1000_dual_fr3_descriptionn_macro />
+
+
+    <xacro:mid360 prefix="" middle="_F" parent="base_link">
+      <origin
+        xyz="0.3315 -0.301617184983994 0.305999999999299"
+        rpy="0 0 0" />
+    </xacro:mid360>
+
+    <xacro:mid360 prefix="" middle="_B" parent="base_link">
+      <origin
+        xyz="-0.331499999999998 0.29738281501601 0.305999999999299"
+        rpy="0 0 3.14159265358979" />
+    </xacro:mid360>
+
+
+    <xacro:include filename="$(find franka_description)/robots/common/franka_arm.xacro" />
+    <xacro:include filename="$(find franka_description)/robots/common/franka_hand.xacro" />
+
+    <xacro:franka_arm 
+      arm_id="left_fr3"
+      joint_limits="${xacro.load_yaml('$(find franka_description)/robots/fr3/joint_limits.yaml')}"
+      connected_to="base_link" 
+      xyz='0.153 0.060000000000003 0.968500000000001'
+      rpy='-1.5707963267949 -1.5707963267949 0'
+      gazebo="false">
+    </xacro:franka_arm>
+    <xacro:franka_hand
+      arm_id="left_fr3"
+      connected_to="left_fr3_link8" 
+      xyz='0 0 0.002'
+      rpy='0 0 -0.785398163'
+      gazebo="false">
+    </xacro:franka_hand>
+
+    <xacro:camera_bracket prefix="left_" parent="left_fr3_link8">
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 -0.785398163" />
+    </xacro:camera_bracket>
+    <xacro:arg name="use_nominal_extrinsics" default="true"/>
+    <xacro:sensor_d435i name="left_camera" parent="left_camera_bracket" use_nominal_extrinsics="$(arg use_nominal_extrinsics)">
+      <origin
+        xyz="0.0829950975679638 0 0.01215"
+        rpy="3.14159265358979 -1.5707963267949 0" />
+    </xacro:sensor_d435i>
+
+
+    <xacro:arg name="ee_id" default="franka_hand" />
+    <xacro:franka_arm 
+      arm_id="right_fr3"
+      joint_limits="${xacro.load_yaml('$(find franka_description)/robots/fr3/joint_limits.yaml')}"
+      connected_to="base_link" 
+      xyz='0.153000000000001 -0.0599999999999994 0.968500000000001'
+      rpy='1.5707963267949 -1.5707963267949 0'
+      gazebo="false">
+    </xacro:franka_arm>
+    <xacro:franka_hand
+      arm_id="right_fr3"
+      connected_to="right_fr3_link8" 
+      xyz='0 0 0.002'
+      rpy='0 0 -0.785398163'
+      gazebo="false">
+    </xacro:franka_hand>
+
+    <xacro:camera_bracket prefix="right_" parent="right_fr3_link8">
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 -0.785398163" />
+    </xacro:camera_bracket>
+
+    <xacro:arg name="use_nominal_extrinsics" default="true"/>
+    <xacro:sensor_d435i name="right_camera" parent="right_camera_bracket" use_nominal_extrinsics="$(arg use_nominal_extrinsics)">
+      <origin
+        xyz="0.0829950975679638 0 0.01215"
+        rpy="3.14159265358979 -1.5707963267949 0" />
+    </xacro:sensor_d435i>
+
+</robot>

@@ -2,11 +2,17 @@
 <robot xmlns:xacro="http://ros.org/wiki/xacro" name="dual_fr3">
 
     <xacro:include filename="$(find mr1000_dual_fr3_description)/urdf/mr1000_macro.xacro" />
-    
     <xacro:include filename="$(find franka_description)/robots/common/franka_arm.xacro" />
+    <xacro:include filename="$(find franka_description)/end_effectors/common/franka_hand.xacro" />
+
+    <xacro:property name="joint_limits" value="${xacro.load_yaml('$(find franka_description)/robots/fr3/joint_limits.yaml')}" />
+    <xacro:property name="inertials" value="${xacro.load_yaml('$(find franka_description)/robots/fr3/inertials.yaml')}" />
+    <xacro:property name="kinematics" value="${xacro.load_yaml('$(find franka_description)/robots/fr3/kinematics.yaml')}" />
+    <xacro:property name="dynamics" value="${xacro.load_yaml('$(find franka_description)/robots/fr3/dynamics.yaml')}" />
+    <xacro:property name="accelerometer_config" value="${xacro.load_yaml('$(find franka_description)/robots/fr3/accelerometers.yaml')}" /> 
+
 
     <link name="world" />
-    
     <xacro:mr1000_dual_fr3_descriptionn_macro />
     
     <joint name="virtual_fix_joint" type="fixed">
@@ -21,9 +27,18 @@
       xyz='0.153 0.060000000000003 0.968500000000001'
       rpy='-1.5707963267949 -1.5707963267949 0'
       safety_distance="0.03"
-      ros2_control="true" 
-      hand="true">
+      joint_limits="${joint_limits}"
+      inertials="${inertials}"
+      kinematics="${kinematics}"
+      dynamics="${dynamics}"
+      accelerometer_config="${accelerometer_config}">
     </xacro:franka_arm>
+
+    <xacro:franka_hand
+      arm_id="left_fr3"
+      connected_to="left_fr3_link8"
+      safety_distance="0.03">
+    </xacro:franka_hand>
 
     <xacro:franka_arm 
       arm_id="right_fr3"
@@ -31,8 +46,17 @@
       xyz='0.153000000000001 -0.0599999999999994 0.968500000000001'
       rpy='1.5707963267949 -1.5707963267949 0'
       safety_distance="0.03"
-      ros2_control="true"
-      hand="true">
+      joint_limits="${joint_limits}"
+      inertials="${inertials}"
+      kinematics="${kinematics}"
+      dynamics="${dynamics}"
+      accelerometer_config="${accelerometer_config}">
     </xacro:franka_arm>
+
+    <xacro:franka_hand
+      arm_id="right_fr3"
+      connected_to="right_fr3_link8"
+      safety_distance="0.03">
+    </xacro:franka_hand>
 
 </robot>

@@ -1,0 +1,1 @@
+/home/zzp/project/multi_arm_coord_ws/src/franka_ros2/franka_semantic_components/include/franka_semantic_components/franka_semantic_component_interface.hpp

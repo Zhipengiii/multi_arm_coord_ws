@@ -1,0 +1,1 @@
+/home/zzp/project/multi_arm_coord_ws/build/franka_gripper/ament_cmake_environment_hooks/local_setup.zsh

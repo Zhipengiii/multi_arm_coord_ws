@@ -1,0 +1,1 @@
+/home/zzp/project/multi_arm_coord_ws/src/franka_ros2/franka_gazebo/franka_gazebo_bringup/launch/gazebo_joint_velocity_controller_example.launch.py

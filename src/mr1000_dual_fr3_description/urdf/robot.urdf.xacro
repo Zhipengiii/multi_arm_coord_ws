@@ -1,9 +1,8 @@
-
 <robot xmlns:xacro="http://ros.org/wiki/xacro" name="robot">
     <xacro:include filename="$(find mr1000_dual_fr3_description)/urdf/mr1000_macro.xacro" />
     <xacro:include filename="$(find mr1000_dual_fr3_description)/urdf/laser.xacro" />
     <xacro:include filename="$(find mr1000_dual_fr3_description)/urdf/mid360.xacro" />
-    <xacro:include filename="$(find realsense2_description)/urdf/_d435i.urdf.xacro"/>
+    <!-- <xacro:include filename="$(find realsense2_description)/urdf/_d435i.urdf.xacro"/> -->
     <xacro:include filename="$(find mr1000_dual_fr3_description)/urdf/camera_bracket.xacro" />
 
     <xacro:mr1000_dual_fr3_descriptionn_macro />

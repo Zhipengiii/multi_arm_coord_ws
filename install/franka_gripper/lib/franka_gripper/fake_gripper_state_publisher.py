@@ -1,0 +1,1 @@
+/home/zzp/project/multi_arm_coord_ws/src/franka_ros2/franka_gripper/scripts/fake_gripper_state_publisher.py

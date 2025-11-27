@@ -1,0 +1,1 @@
+/home/zzp/project/multi_arm_coord_ws/src/franka_ros2/franka_msgs/msg/Errors.msg

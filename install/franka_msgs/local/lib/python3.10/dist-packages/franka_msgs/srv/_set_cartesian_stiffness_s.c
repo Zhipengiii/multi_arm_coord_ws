@@ -1,0 +1,1 @@
+/home/zzp/project/multi_arm_coord_ws/build/franka_msgs/rosidl_generator_py/franka_msgs/srv/_set_cartesian_stiffness_s.c

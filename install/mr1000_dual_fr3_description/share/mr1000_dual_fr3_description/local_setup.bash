@@ -1,0 +1,1 @@
+/home/zzp/project/multi_arm_coord_ws/build/mr1000_dual_fr3_description/ament_cmake_environment_hooks/local_setup.bash

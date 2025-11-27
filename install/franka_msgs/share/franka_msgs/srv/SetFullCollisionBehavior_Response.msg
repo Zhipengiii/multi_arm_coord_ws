@@ -1,0 +1,1 @@
+/home/zzp/project/multi_arm_coord_ws/build/franka_msgs/rosidl_cmake/srv/SetFullCollisionBehavior_Response.msg

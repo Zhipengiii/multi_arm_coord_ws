@@ -1,0 +1,1 @@
+/home/zzp/project/multi_arm_coord_ws/build/franka_msgs/rosidl_generator_cpp/franka_msgs/srv/set_full_collision_behavior.hpp

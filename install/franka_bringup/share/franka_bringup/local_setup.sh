@@ -1,0 +1,1 @@
+/home/zzp/project/multi_arm_coord_ws/build/franka_bringup/ament_cmake_environment_hooks/local_setup.sh

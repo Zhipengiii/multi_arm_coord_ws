@@ -1,0 +1,1 @@
+/home/zzp/project/multi_arm_coord_ws/src/franka_ros2/franka_fr3_moveit_config/launch/move_group.launch.py

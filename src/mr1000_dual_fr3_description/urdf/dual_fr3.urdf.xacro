@@ -9,11 +9,11 @@
     <xacro:arg name="hand" default="true" />
 
     <xacro:include filename="$(find mr1000_dual_fr3_description)/urdf/mr1000_macro.xacro" />
-    <xacro:include filename="$(find franka_description)/robots/common/utils.xacro" />
+    <!-- <xacro:include filename="$(find franka_description)/robots/common/utils.xacro" /> -->
     <xacro:include filename="$(find franka_description)/robots/common/franka_arm.xacro" />
     <xacro:include filename="$(find franka_description)/end_effectors/common/franka_hand.xacro"/>
     <xacro:include filename="$(find franka_description)/end_effectors/common/utils.xacro" />
-    <xacro:include filename="$(find franka_description)/robots/common/franka_arm.ros2_control.xacro"/>
+    <!-- <xacro:include filename="$(find franka_description)/robots/common/franka_arm.ros2_control.xacro"/> -->
 
     <xacro:property name="joint_limits" value="${xacro.load_yaml('$(find franka_description)/robots/fr3/joint_limits.yaml')}" />
     <xacro:property name="inertials" value="${xacro.load_yaml('$(find franka_description)/robots/fr3/inertials.yaml')}" />
@@ -62,7 +62,7 @@
         />
     </xacro:if>
 
-    <xacro:franka_arm_ros2_control
+    <!-- <xacro:franka_arm_ros2_control
         arm_id="fr3"
         arm_prefix="left_"
         robot_ip="$(arg robot_ip_left)"
@@ -70,7 +70,7 @@
         fake_sensor_commands="$(arg fake_sensor_commands)"
         gazebo="$(arg gazebo)"
         hand="$(arg hand)"
-    />
+    /> -->
 
     <xacro:franka_arm
         arm_id="fr3"
@@ -103,7 +103,7 @@
         />
     </xacro:if>
 
-    <xacro:franka_arm_ros2_control
+    <!-- <xacro:franka_arm_ros2_control
         arm_id="fr3"
         arm_prefix="right_"
         robot_ip="$(arg robot_ip_right)"
@@ -111,6 +111,6 @@
         fake_sensor_commands="$(arg fake_sensor_commands)"
         gazebo="$(arg gazebo)"
         hand="$(arg hand)"
-    />
+    /> -->
 
 </robot>
